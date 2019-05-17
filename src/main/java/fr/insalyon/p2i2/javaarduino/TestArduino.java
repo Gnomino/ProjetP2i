@@ -28,6 +28,7 @@ public class TestArduino
         console.log("CONNEXION au port " + myPort);
 
         ArduinoManager arduino = new ArduinoManager(myPort) {
+            int totalNbSamples = 0;
             @Override
             protected void onData(String line) {
 
@@ -35,6 +36,10 @@ public class TestArduino
                 // Affichage sur la Console de la ligne transmise par l'Arduino
                 console.println("ARDUINO >> " + line);
                 SoundProcessing.addAmplitude(Integer.parseInt(line));
+                totalNbSamples++;
+                if(totalNbSamples%200 == 0) {
+                    console.println("Main frequency : " + SoundProcessing.sampleMainFrequency());
+                }
                 // À vous de jouer ;-)
                 // Par exemple:
                 //   String[] data = line.split(";");
