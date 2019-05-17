@@ -34,10 +34,10 @@ public class TestArduino
 
                 // Cette méthode est appelée AUTOMATIQUEMENT lorsque l'Arduino envoie des données
                 // Affichage sur la Console de la ligne transmise par l'Arduino
-                console.println("ARDUINO >> " + line);
+                // console.println("ARDUINO >> " + line);
                 SoundProcessing.addAmplitude(Integer.parseInt(line));
                 totalNbSamples++;
-                if(totalNbSamples%200 == 0) {
+                if(totalNbSamples%100 == 0) {
                     console.println("Main frequency : " + SoundProcessing.sampleMainFrequency());
                 }
                 // À vous de jouer ;-)
@@ -46,6 +46,8 @@ public class TestArduino
                 //   int sensorid = Integer.parseInt(data[0]);
                 //   double value = Double.parseDouble(data[1]);
                 //   ...
+            // console.println("test ");
+
             }
         };
 

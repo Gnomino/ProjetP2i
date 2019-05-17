@@ -23,15 +23,16 @@ public class SoundProcessing {
             a[(2*i)+1] = 0;
         }
         doubleFFT.complexForward(a);
-        double maxMagnitude = -1;
+        double maxMagnitude = Double.NEGATIVE_INFINITY;
         double maxFrequency = -1;
-        for(int i = 0; i < nbSamples; ++i) {
+        for(int i = 1; i < nbSamples; ++i) {
             double re = a[2*i];
             double im = a[(2*i)+1];
             double magnitude = (re*re + im*im);
             if(magnitude > maxMagnitude) {
                 maxMagnitude = magnitude;
                 maxFrequency = SAMPLING_FREQUENCY * (((double) i)/(double) nbSamples);
+                System.out.println("--- mag : " + maxMagnitude + " for freq : " + maxFrequency + " i : " + i);
             }
         }
 

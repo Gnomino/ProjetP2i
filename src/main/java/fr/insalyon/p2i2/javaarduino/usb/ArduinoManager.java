@@ -1,5 +1,6 @@
 package fr.insalyon.p2i2.javaarduino.usb;
 
+import fr.insalyon.p2i2.javaarduino.TestArduino;
 import fr.insalyon.p2i2.javaarduino.util.Console;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -153,7 +154,7 @@ public class ArduinoManager {
 
     public static void main(String[] args) {
 
-        // Objet matérialisant la console d'exécution (Affichage Écran / Lecture Clavier)
+        /* // Objet matérialisant la console d'exécution (Affichage Écran / Lecture Clavier)
         final Console console = new Console();
 
         // Affichage sur la console
@@ -224,7 +225,7 @@ public class ArduinoManager {
         } catch (IOException ex) {
             // Si un problème a eu lieu...
             console.log(ex);
-        }
-
+        } */
+        TestArduino.main(args);
     }
 }
