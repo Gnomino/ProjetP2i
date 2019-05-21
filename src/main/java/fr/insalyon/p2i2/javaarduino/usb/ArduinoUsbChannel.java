@@ -1,18 +1,11 @@
 package fr.insalyon.p2i2.javaarduino.usb;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
+import jssc.*;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import jssc.SerialPort;
-import jssc.SerialPortEvent;
-import jssc.SerialPortEventListener;
-import jssc.SerialPortException;
-import jssc.SerialPortList;
 
 public class ArduinoUsbChannel {
 
@@ -70,7 +63,7 @@ public class ArduinoUsbChannel {
                 if (event.isRXCHAR()) {//If data is available
 
                     try {
-                        byte buffer[] = serialPort.readBytes();
+                        byte[] buffer = serialPort.readBytes();
 
                         //System.err.println("=> VCP Data String received: " + new String(buffer));
 
@@ -105,7 +98,7 @@ public class ArduinoUsbChannel {
             @Override
             public void run() {
 
-                PipedInputStream input = (PipedInputStream) ArduinoUsbChannel.this.vcpInputInnerStream;
+                PipedInputStream input = ArduinoUsbChannel.this.vcpInputInnerStream;
 
                 try {
 

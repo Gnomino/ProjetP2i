@@ -1,11 +1,11 @@
 package fr.insalyon.p2i2.javaarduino;
 
-import fr.insalyon.p2i2.javaarduino.fr.insalyon.p2i2.javaarduino.SoundProcessing;
 import fr.insalyon.p2i2.javaarduino.usb.ArduinoManager;
 import fr.insalyon.p2i2.javaarduino.util.Console;
+
 import java.io.IOException;
 
-public class TestArduino 
+public class MainArduino
 {
     
     public static void main(String[] args) {
@@ -14,7 +14,7 @@ public class TestArduino
         final Console console = new Console();
 
         // Affichage sur la console
-        console.log("DÉBUT du programme TestArduino");
+        console.log("DÉBUT du programme MainArduino");
 
         console.log("TOUS les Ports COM Virtuels:");
         for (String port : ArduinoManager.listVirtualComPorts()) {

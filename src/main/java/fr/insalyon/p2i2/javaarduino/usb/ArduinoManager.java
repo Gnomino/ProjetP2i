@@ -1,13 +1,13 @@
 package fr.insalyon.p2i2.javaarduino.usb;
 
-import fr.insalyon.p2i2.javaarduino.TestArduino;
-import fr.insalyon.p2i2.javaarduino.util.Console;
+import fr.insalyon.p2i2.javaarduino.MainArduino;
+import jssc.SerialPortException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.List;
-import jssc.SerialPortException;
 
 public class ArduinoManager {
 
@@ -158,7 +158,7 @@ public class ArduinoManager {
         final Console console = new Console();
 
         // Affichage sur la console
-        console.log("DÉBUT du programme TestArduino");
+        console.log("DÉBUT du programme MainArduino");
 
         console.log("TOUS les Ports COM Virtuels:");
         for (String port : ArduinoManager.listVirtualComPorts()) {
@@ -226,6 +226,6 @@ public class ArduinoManager {
             // Si un problème a eu lieu...
             console.log(ex);
         } */
-        TestArduino.main(args);
+        MainArduino.main(args);
     }
 }
