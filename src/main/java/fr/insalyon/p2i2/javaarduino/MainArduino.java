@@ -1,9 +1,11 @@
 package fr.insalyon.p2i2.javaarduino;
 
+import fr.insalyon.p2i2.javaarduino.db.MusicDatabase;
 import fr.insalyon.p2i2.javaarduino.usb.ArduinoManager;
 import fr.insalyon.p2i2.javaarduino.util.Console;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class MainArduino
 {
@@ -12,7 +14,13 @@ public class MainArduino
 
         // Objet matérialisant la console d'exécution (Affichage Écran / Lecture Clavier)
         final Console console = new Console();
-
+        try {
+            MusicDatabase.initiateConnection("localhost", "p2i", "p2i", "p2i"); // Note: It's a bad practice to share code that contains credentials
+        } catch (SQLException e) {
+            System.out.println("Impossible de se connecter à MySQL : ");
+            e.printStackTrace();
+            return;
+        }
         // Affichage sur la console
         console.log("DÉBUT du programme MainArduino");
 
