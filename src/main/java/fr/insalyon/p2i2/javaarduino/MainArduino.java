@@ -15,7 +15,7 @@ public class MainArduino
         // Objet matérialisant la console d'exécution (Affichage Écran / Lecture Clavier)
         final Console console = new Console();
         try {
-            MusicDatabase.initiateConnection("PC-TP-MYSQL.insa-lyon.fr", "G224_C_BD1", "G224_C", "G224_C"); // Note: It's a bad practice to share code that contains credentials
+            MusicDatabase.initiateConnection("PC-TP-MYSQL.insa-lyon.fr:3306", "G224_C_BD1", "G224_C", "G224_C"); // Note: It's a bad practice to share code that contains credentials
         } catch (SQLException e) {
             System.out.println("Impossible de se connecter à MySQL : ");
             e.printStackTrace();
