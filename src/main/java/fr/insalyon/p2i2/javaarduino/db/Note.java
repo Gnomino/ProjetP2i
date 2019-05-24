@@ -1,11 +1,10 @@
 package fr.insalyon.p2i2.javaarduino.db;
 
 public class Note {
-    public final int idNote, frequency;
+    public final int frequency;
     public final String name;
 
-    public Note(int idNote, int frequency, String name) {
-        this.idNote = idNote;
+    public Note(int frequency, String name) {
         this.frequency = frequency;
         this.name = name;
     }

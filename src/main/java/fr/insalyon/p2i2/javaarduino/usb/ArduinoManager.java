@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class ArduinoManager {
@@ -106,7 +107,7 @@ public class ArduinoManager {
     public final void write(String line) throws IOException {
         if (this.vcpChannel != null) {
             OutputStream writer = this.vcpChannel.getWriter();
-            writer.write(line.getBytes("UTF-8"));
+            writer.write(line.getBytes(StandardCharsets.UTF_8));
             writer.write('\n');
         } else {
             throw new IOException("Erreur: VCP Channel pas encore initialisé");

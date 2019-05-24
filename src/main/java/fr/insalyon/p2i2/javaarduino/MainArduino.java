@@ -15,7 +15,7 @@ public class MainArduino
         // Objet matérialisant la console d'exécution (Affichage Écran / Lecture Clavier)
         final Console console = new Console();
         try {
-            MusicDatabase.initiateConnection("localhost", "p2i", "p2i", "p2i"); // Note: It's a bad practice to share code that contains credentials
+            MusicDatabase.initiateConnection("PC-TP-MYSQL.insa-lyon.fr", "G224_C_BD1", "G224_C", "G224_C"); // Note: It's a bad practice to share code that contains credentials
         } catch (SQLException e) {
             System.out.println("Impossible de se connecter à MySQL : ");
             e.printStackTrace();
@@ -43,10 +43,17 @@ public class MainArduino
                 // Cette méthode est appelée AUTOMATIQUEMENT lorsque l'Arduino envoie des données
                 // Affichage sur la Console de la ligne transmise par l'Arduino
                 // console.println("ARDUINO >> " + line);
-                SoundProcessing.addAmplitude(Integer.parseInt(line));
+                if(line.length() == 0)
+                    return;
+                try {
+                    SoundProcessing.addAmplitude(Integer.parseInt(line));
+                }
+                catch (NumberFormatException e) {
+                    console.log(e.getLocalizedMessage());
+                }
                 totalNbSamples++;
-                if(totalNbSamples%100 == 0) {
-                    console.println("Main frequency : " + SoundProcessing.sampleMainFrequency());
+                if(totalNbSamples%400 == 0) {
+                    double mainFrequency = SoundProcessing.sampleMainFrequency();
                 }
                 // À vous de jouer ;-)
                 // Par exemple:
