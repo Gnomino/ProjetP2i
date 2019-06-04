@@ -12,4 +12,8 @@ public class Note {
     public boolean hasFrequency(double frequency) {
         return Math.abs(frequency - this.frequency) <= 20; // On tolère de 20 Hz de différence entre 2 notes
     }
+
+    public String toString() {
+        return "Note \"" + name + "\" : fréquence " + frequency + " Hz";
+    }
 }

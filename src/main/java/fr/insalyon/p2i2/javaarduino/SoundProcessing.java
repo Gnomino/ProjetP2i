@@ -6,8 +6,8 @@ import java.util.LinkedList;
 
 public class SoundProcessing {
     private static LinkedList<Integer> soundSample = new LinkedList<Integer>();
-    private static final int NB_SAMPLES = 400;
-    private static final int SAMPLING_FREQUENCY = 2000;
+    public static final int NB_SAMPLES = 1000;
+    private static final double SAMPLING_FREQUENCY = 2000.;
     public static void addAmplitude(int a) {
         soundSample.add(a);
         if(soundSample.size() >= NB_SAMPLES) {
@@ -43,10 +43,9 @@ public class SoundProcessing {
             if(magnitude > maxMagnitude) {
                 maxMagnitude = magnitude;
                 maxFrequency = frequency;
-                System.out.println("--- mag : " + maxMagnitude + " for freq : " + maxFrequency + " i : " + i);
             }
         }
-
+        System.out.println("--- mag : " + maxMagnitude + " for freq : " + maxFrequency);
         return maxFrequency;
     }
 }
