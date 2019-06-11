@@ -2,6 +2,7 @@ package fr.insalyon.p2i2.javaarduino;
 
 import fr.insalyon.p2i2.javaarduino.db.MusicDatabase;
 import fr.insalyon.p2i2.javaarduino.db.Note;
+import fr.insalyon.p2i2.javaarduino.ihm.IHM_Guitare;
 import fr.insalyon.p2i2.javaarduino.usb.ArduinoManager;
 import fr.insalyon.p2i2.javaarduino.util.Console;
 
@@ -10,7 +11,10 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 public class MainArduino {
-
+    private static boolean keepLooping = true;
+    public static void stopLoop() {
+        keepLooping = false;
+    }
     public static void main(String[] args) {
 
         final Console console = new Console();
@@ -33,7 +37,7 @@ public class MainArduino {
         console.log("CONNEXION au port " + myPort);
 
         ArduinoManager arduino = new ArduinoManager(myPort) {
-            int totalNbSamples = 0;
+            // int totalNbSamples = 0;
 
             @Override
             protected void onData(String line) {
@@ -41,17 +45,17 @@ public class MainArduino {
                 try {
                     SoundProcessing.addAmplitude(Integer.parseInt(line));
                 } catch (NumberFormatException e) {
-                    console.log(e.getLocalizedMessage());
+                    e.printStackTrace();
                 }
-                if ((++totalNbSamples) % SoundProcessing.NB_SAMPLES == 0) {
+                /*if ((++totalNbSamples) % SoundProcessing.NB_SAMPLES == 0) {
                     double mainFrequency = SoundProcessing.sampleMainFrequency();
-                }
+                }*/
             }
         };
 
         try {
             arduino.start();
-            boolean exit = false;
+            /* boolean exit = false;
 
             while (!exit) {
                 String line = console.readLine("Envoyer une ligne (ou 'stop') > ");
@@ -63,14 +67,20 @@ public class MainArduino {
                         arduino.write(line);
                     }
                 }
+            } */
+            IHM_Guitare.main(args);
+            while(keepLooping) {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-
             console.log("ARRÊT de la connexion");
             arduino.stop();
 
         } catch (IOException ex) {
             console.log(ex);
         }
-
     }
 }

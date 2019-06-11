@@ -4,6 +4,7 @@ public class PlayedNote {
     private int idPlayedNote;
     private int frequency;
     private int timePlayed;
+
     public PlayedNote(int frequency, int timePlayed) {
         this.idPlayedNote = -1; // The note is not in the database yet
         this.frequency = frequency;
@@ -28,11 +29,11 @@ public class PlayedNote {
         return frequency;
     }
 
-    public void setTimePlayed(int timePlayed) {
-        this.timePlayed = timePlayed;
-    }
-
     public int getTimePlayed() {
         return timePlayed;
+    }
+
+    public void setTimePlayed(int timePlayed) {
+        this.timePlayed = timePlayed;
     }
 }

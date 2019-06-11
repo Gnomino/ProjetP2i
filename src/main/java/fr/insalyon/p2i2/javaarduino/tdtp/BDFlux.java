@@ -1,25 +1,11 @@
 package fr.insalyon.p2i2.javaarduino.tdtp;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.io.*;
+import java.sql.*;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class BDFlux {
@@ -27,6 +13,31 @@ public class BDFlux {
     private Connection conn;
     private PreparedStatement insertMesureStatement;
     private PreparedStatement selectMesuresStatement;
+
+    public BDFlux(String bd, String compte, String motDePasse) {
+        try {
+
+            //Enregistrement de la classe du driver par le driverManager
+            Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("Driver trouvé...");
+
+            //Création d'une connexion sur la base de donnée
+            this.conn = DriverManager.getConnection("jdbc:mysql://PC-TP-MYSQL.insa-lyon.fr:3306/" + bd, compte,
+                    motDePasse);
+            //this.conn = DriverManager.getConnection("jdbc:mysql://localhost:8889/" + bd, compte, motDePasse);
+            System.out.println("Connexion établie...");
+
+            // Prepared Statement
+            this.insertMesureStatement = this.conn.prepareStatement("INSERT INTO Mesure (valeur,idCapteur,dateMesure)"
+                    + " VALUES (?,?,?) ;");
+            this.selectMesuresStatement = this.conn.prepareStatement("SELECT valeur,idCapteur numInventaire," +
+                    "dateMesure FROM Mesure WHERE idCapteur = ? AND dateMesure >= ? AND dateMesure < ? ;");
+
+        } catch (Exception ex) {
+            ex.printStackTrace(System.err);
+            System.exit(-1);
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -39,7 +50,7 @@ public class BDFlux {
 //                new GregorianCalendar(2016, Calendar.MAY, 8).getTime(),
 //                new GregorianCalendar(2016, Calendar.MAY, 9).getTime()
 //            );
-//        
+//
 //        bdFlux.ecrireMesuresDansFichier(
 //                "L:\\TDTP3\\output",
 //                1,
@@ -49,34 +60,10 @@ public class BDFlux {
 
     }
 
-    public BDFlux(String bd, String compte, String motDePasse) {
-        try {
-
-            //Enregistrement de la classe du driver par le driverManager
-            Class.forName("com.mysql.jdbc.Driver");
-            System.out.println("Driver trouvé...");
-
-            //Création d'une connexion sur la base de donnée
-            this.conn = DriverManager.getConnection("jdbc:mysql://PC-TP-MYSQL.insa-lyon.fr:3306/" + bd, compte, motDePasse);
-            //this.conn = DriverManager.getConnection("jdbc:mysql://localhost:8889/" + bd, compte, motDePasse);
-            System.out.println("Connexion établie...");
-
-            // Prepared Statement
-            this.insertMesureStatement = this.conn.prepareStatement("INSERT INTO Mesure (valeur,idCapteur,dateMesure) VALUES (?,?,?) ;");
-            this.selectMesuresStatement = this.conn.prepareStatement("SELECT valeur,idCapteur numInventaire,dateMesure FROM Mesure WHERE idCapteur = ? AND dateMesure >= ? AND dateMesure < ? ;");
-
-        } catch (Exception ex) {
-            ex.printStackTrace(System.err);
-            System.exit(-1);
-        }
-    }
-
     public void lireMesuresDepuisFichier(String cheminVersFichier) {
         try {
             // À compléter
-            BufferedReader input = new BufferedReader(new InputStreamReader(
-                    new FileInputStream(cheminVersFichier)
-            ));
+            BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(cheminVersFichier)));
 
             lireMesures(input);
 
@@ -141,11 +128,7 @@ public class BDFlux {
 
             while (result.next()) {
 
-                output.println(
-                        result.getInt("numInventaire") + ";"
-                        + formatDatePourCSV.format(new Date(result.getTimestamp("dateMesure").getTime())) + ";"
-                        + formatNombreDecimal.format(result.getDouble("valeur")) + ";"
-                );
+                output.println(result.getInt("numInventaire") + ";" + formatDatePourCSV.format(new Date(result.getTimestamp("dateMesure").getTime())) + ";" + formatNombreDecimal.format(result.getDouble("valeur")) + ";");
 
             }
 
@@ -162,9 +145,8 @@ public class BDFlux {
             String datePourNomFichier = formatDatePourNomFichier.format(new Date());
             String nomFichier = "mesures-output_" + datePourNomFichier + ".csv";
 
-            PrintWriter writer = new PrintWriter(new OutputStreamWriter(
-                    new FileOutputStream(cheminVersDossier + "\\" + nomFichier)
-            ));
+            PrintWriter writer =
+                    new PrintWriter(new OutputStreamWriter(new FileOutputStream(cheminVersDossier + "\\" + nomFichier)));
 
             ecrireMesures(writer, numInventaire, dateDebut, dateFin);
 
