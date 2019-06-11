@@ -5,7 +5,7 @@ import org.jtransforms.fft.DoubleFFT_1D;
 import java.util.LinkedList;
 
 public class SoundProcessing {
-    public static final int NB_SAMPLES = 1000;
+    public static int NB_SAMPLES = 1000;
     private static final double SAMPLING_FREQUENCY = 2000.;
     private static LinkedList<Integer> soundSample = new LinkedList<Integer>();
 

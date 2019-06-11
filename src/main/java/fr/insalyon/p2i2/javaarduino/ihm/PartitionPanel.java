@@ -23,7 +23,7 @@ public class PartitionPanel extends JPanel {
     private final int NB_CENTRAL_LINES = 6;
     private final int PARTITION_HEIGHT = 100;
     private final int NB_PARTITIONS = 3;
-    private final int INTER_PARTITION_SPACE = 20;
+    private final int INTER_PARTITION_SPACE = 0;
     private final int PARITION_WIDTH = 940;
     private FenetreJeu fj;
 
@@ -66,6 +66,7 @@ public class PartitionPanel extends JPanel {
         return res;
     }
     public void paint(Graphics g) {
+        g.setColor(Color.BLACK);
         // Ajout de 3 partitions sur l'IHM
         g.setColor(Color.black);
         for (int iPartition = 0; iPartition < NB_PARTITIONS; iPartition++) {

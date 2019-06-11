@@ -111,7 +111,11 @@ public class MusicDatabase {
         PreparedStatement attemptInsertStatement =
                 connection.prepareStatement("INSERT INTO Tentative (idMusique) " + "VALUES(?)",
                         Statement.RETURN_GENERATED_KEYS);
-        attemptInsertStatement.setInt(1, attempt.music.getIdMusic());
+        if(attempt.music == null) {
+            attemptInsertStatement.setInt(1, 0);
+        }
+        else
+            attemptInsertStatement.setInt(1, attempt.music.getIdMusic());
         attemptInsertStatement.executeUpdate();
         ResultSet generatedKeys = attemptInsertStatement.getGeneratedKeys();
         generatedKeys.next();

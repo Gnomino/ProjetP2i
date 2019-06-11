@@ -9,6 +9,7 @@ import fr.insalyon.p2i2.javaarduino.db.Music;
 import fr.insalyon.p2i2.javaarduino.db.MusicDatabase;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 
 /**
@@ -220,14 +221,15 @@ public class FenetreAccueil extends javax.swing.JFrame {
 
     private void analyseDonneesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
         // :event_analyseDonneesActionPerformed
-        // TODO add your handling code here:
+
+        this.dispose();
+        FenetreAnalyse fa = new FenetreAnalyse(10);
     }//GEN-LAST:event_analyseDonneesActionPerformed
 
     private void nomMusiqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomMusiqueActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nomMusiqueActionPerformed
     // End of variables declaration//GEN-END:variables
-
     public JComboBox<String> getNomMusique() {
         return nomMusique;
     }

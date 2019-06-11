@@ -14,6 +14,7 @@ public class TickTask extends TimerTask {
     private double playedFrequency;
     private FenetreJeu fenetreJeu;
     private Attempt curAttempt;
+    private boolean ended = false;
     public TickTask(FenetreJeu fenetreJeu) {
         this.tickID = -1;
         this.waitingSince = 0;
@@ -23,6 +24,8 @@ public class TickTask extends TimerTask {
     }
     @Override
     public void run() {
+        if(ended)
+            return;
         tickID++;
         System.out.println(tickID);
         if(tickID % TickTimer.FFT_PERIOD == 0) {
@@ -33,6 +36,7 @@ public class TickTask extends TimerTask {
         double curTime = getMusicTime();
         if(curTime > fenetreJeu.getPartition().getMusicDuration()) {
             fenetreJeu.getTickTimer().end(curAttempt);
+            ended=true;
             return;
         }
         for(Position p : fenetreJeu.getPartition().getPositionList()) {
